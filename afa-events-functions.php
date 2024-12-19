@@ -8,6 +8,8 @@ function afa_events_homepage() {
 
 	$fallback_image = get_fallback_image('events');
 
+	$is_afa = str_contains( get_site_url(), 'https://www.afa.org' );
+
 	$events = afa_events_get_events();
 
 	if ( empty( $events ) ) {
@@ -31,10 +33,20 @@ function afa_events_homepage() {
 	if ( is_wp_error( $events ) || empty( $events ) ) { return; }
 	*/
 
+	$buttons = array(
+	);
+
+	if ( $is_afa ) {
+		$buttons = "<a class='btn primary' href='/events/'>View All Events</a>";
+	} else {
+		$buttons = "<a class='btn primary' href='/events/'>View Local Events</a>&nbsp;&nbsp;<a class='btn primary' href='https://www.afa.org/events/'>View National Events</a>";
+
+	}
+
 	echo "<div class='views-entity-embed'>";
 	echo "<div class='view-events-preview py-5' data-yesterday='{$yesterday}'>";
 	echo "<div class='container'>";
-	echo "<div class='view-header'><h2>Upcoming Events</h2><a class='btn primary' href='/events/'>View All Events</a></div>";
+	echo "<div class='view-header'><h2>Upcoming Events</h2>{$buttons}</div>";
 	echo "<div class='view-content'>";
 
 	$i = 0;
@@ -588,9 +600,15 @@ function afa_events_get_events() {
 		}
 	}
 
-	$rss_events = afa_events_national_events();
+	$is_afa = str_contains( get_site_url(), 'https://www.afa.org' );
 
-	$events = array_merge( $events, $rss_events );
+	if ( ! $is_afa ) {
+
+		$rss_events = afa_events_national_events();
+
+		$events = array_merge( $events, $rss_events );
+
+	}
 
 	$events = wp_list_sort( $events, 'post_date', 'ASC' );
 
