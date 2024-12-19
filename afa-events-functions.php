@@ -39,14 +39,14 @@ function afa_events_homepage() {
 	if ( $is_afa ) {
 		$buttons = "<a class='btn primary' href='/events/'>View All Events</a>";
 	} else {
-		$buttons = "<a class='btn primary' href='/events/'>View Local Events</a>&nbsp;&nbsp;<a class='btn primary' href='https://www.afa.org/events/'>View National Events</a>";
+		$buttons = "<div><a class='btn primary' href='/events/'>View Local Events</a>&nbsp;&nbsp;<a class='btn primary' href='https://www.afa.org/events/'>View National Events</a></div>";
 
 	}
 
 	echo "<div class='views-entity-embed'>";
 	echo "<div class='view-events-preview py-5' data-yesterday='{$yesterday}'>";
 	echo "<div class='container'>";
-	echo "<div class='view-header'><h2>Upcoming Events</h2>{$buttons}</div>";
+	echo "<div class='view-header'><h2>Upcoming Events</h2><div>{$buttons}</div></div>";
 	echo "<div class='view-content'>";
 
 	$i = 0;
