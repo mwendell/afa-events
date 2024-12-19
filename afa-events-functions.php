@@ -37,14 +37,36 @@ function afa_events_homepage() {
 	echo "<div class='view-header'><h2>Upcoming Events</h2><a class='btn primary' href='/events/'>View All Events</a></div>";
 	echo "<div class='view-content'>";
 
+	$i = 0;
 	foreach ( $events as $event ) {
+
+		$i++;
+		if ( $i > 4 ) {
+			break;
+		}
+
 		$event_id = $event->ID;
-		$event_title = $event->post_title;
-		$offsite_link = wp_http_validate_url( get_field( 'offsite_link', $event_id ) );
-		$event_date_array = get_field( 'times', $event_id );
+		$event_title = $event['post_title'];
+
+		// NEED TO ADD OFFSITE LINK TO RSS FEED
+		$offsite_link = false; // wp_http_validate_url( get_field( 'offsite_link', $event_id ) );
+
+
+		$start_date = ( $event['meta_input']['event_start_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_start_date'] ) ) : '';
+		$end_date = ( $event['meta_input']['event_end_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_end_date'] ) ) : '';
+
+		$event_date_array = array(
+			'start_date'  => $start_date,
+			'end_date'    => $end_date,
+			'start_time'  => $event['meta_input']['event_start_time'],
+			'end_time'    => $event['meta_input']['event_end_time'],
+			'time_zone'   => $event['meta_input']['event_time_zone'],
+		);
+
 		$event_date = afa_events_process_date( $event_date_array, true );
 		$event_datestring = ( isset( $event_date_array['start_date'] ) ) ? $event_date_array['start_date'] : '';
-		$event_image = get_field( 'event_thumbnail', $event_id );
+		$event_image = $event['meta_input']['event_thumbnail_image'];
+		if ( is_numeric( $event_image ) ) { $event_image = wp_get_attachment_image_url( $event_image, 'large' ); }
 		if ( empty( $event_image ) ) { $event_image = $fallback_image; }
 		$event_link = ( $offsite_link ) ? $offsite_link : get_the_permalink( $event_id );
 
@@ -437,6 +459,8 @@ function afa_events_national_events() {
 			'date'    => time(),
 			'events'  => array(),
 		);
+
+		// NEED TO ADD OFFSITE LINK TO RSS FEED
 
 		$rss = fetch_feed( 'https://www.afa.org/events/feed/' );
 
