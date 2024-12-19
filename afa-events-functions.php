@@ -404,3 +404,16 @@ function afa_events_get_event_for_agenda() {
 
 	wp_send_json_success( $fields );
 }
+
+if ( ! function_exists( 'get_fallback_image' ) ) {
+	function get_fallback_image( $fallback_type = false ) {
+		if ( ! function_exists( 'get_field' ) ) { return false; }
+		$fallback_images = get_field( 'fallback_images', 'options' );
+		if ( ! is_array( $fallback_images ) ) { return false; }
+		if ( $fallback_type == 'news' || $fallback_type == 'events' ) {
+			return $fallback_images[$fallback_type];
+		} elseif ( $fallback_type ) {
+			return $fallback_images;
+		}
+	}
+}
