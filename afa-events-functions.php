@@ -45,13 +45,8 @@ function afa_events_homepage() {
 			break;
 		}
 
-		$event_id = $event->ID;
+		$event_id = $event->ID ?: false;
 		$event_title = $event['post_title'];
-
-		// NEED TO ADD OFFSITE LINK TO RSS FEED
-		$offsite_link = false; // wp_http_validate_url( get_field( 'offsite_link', $event_id ) );
-
-
 		$start_date = ( $event['meta_input']['event_start_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_start_date'] ) ) : '';
 		$end_date = ( $event['meta_input']['event_end_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_end_date'] ) ) : '';
 
@@ -68,8 +63,7 @@ function afa_events_homepage() {
 		$event_image = $event['meta_input']['event_thumbnail_image'];
 		if ( is_numeric( $event_image ) ) { $event_image = wp_get_attachment_image_url( $event_image, 'large' ); }
 		if ( empty( $event_image ) ) { $event_image = $fallback_image; }
-		$event_link = ( $offsite_link ) ? $offsite_link : get_the_permalink( $event_id );
-
+		$event_link = $event['post_url'];
 
 		echo "<div class='views-row'>";
 		echo "<article role='article' class='node event latest'>";
@@ -78,7 +72,7 @@ function afa_events_homepage() {
 		echo "<div class='img'><img src='{$event_image}' title='' style=''></div>";
 
 		// TITLE AND DATE
-		echo "<div class='content'><div>";
+		echo "<div class='content' data-id='{$event_id}'><div>";
 		echo "<h3><span class='field field--name-title field--type-string field--label-hidden'>{$event_title}</span></h3>";
 		echo "<div class='date-time'><div class='date'><i class='icon-calendar'></i>&nbsp;<time datetime='{$event_datestring}' class='datetime'>{$event_date}</time></div></div>";
 		echo "</div></div>"; // .content
@@ -460,8 +454,6 @@ function afa_events_national_events() {
 			'events'  => array(),
 		);
 
-		// NEED TO ADD OFFSITE LINK TO RSS FEED
-
 		$rss = fetch_feed( 'https://www.afa.org/events/feed/' );
 
 		if ( is_wp_error( $rss ) || empty( $rss ) ) {
@@ -482,7 +474,7 @@ function afa_events_national_events() {
 					$thumbnail_item = $post->get_item_tags( 'http://search.yahoo.com/mrss/','thumbnail' );
 					$thumbnail_data = reset( $thumbnail_item[0]['attribs'] );
 				}
-				$image = ( isset( $thumbnail_data['url'] ) ) ? $thumbnail_data['url'] : $fallback_news_image;
+				$image = $thumbnail_data['url'];
 				//$image = array( 'event_thumbnail_image' => $image );
 				if ( $post->get_item_tags( 'https://www.afa.org/event-namespace/','starttime' ) ) {
 					$times = array(
@@ -540,6 +532,7 @@ function afa_events_get_events() {
 			met.meta_value AS 'times_end_time',
 			mtz.meta_value AS 'times_time_zone',
 			mth.meta_value AS 'event_thumbnail'
+			mol.meta_value AS 'offsite_link'
 		FROM {$wpdb->posts} p
 			JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
 			LEFT JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
@@ -547,6 +540,7 @@ function afa_events_get_events() {
 			LEFT JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
 			LEFT JOIN {$wpdb->postmeta} AS mtz on (p.ID = mtz.post_id) AND (mtz.meta_key = 'times_time_zone')
 			LEFT JOIN {$wpdb->postmeta} AS mth on (p.ID = mth.post_id) AND (mth.meta_key = 'event_thumbnail')
+			LEFT JOIN {$wpdb->postmeta} AS mol on (p.ID = mth.post_id) AND (mol.meta_key = 'offsite_link')
 		WHERE
 			(p.post_type = 'event') AND
 			(p.post_status = 'publish') AND
@@ -563,6 +557,7 @@ function afa_events_get_events() {
 		foreach( $local_events as $event ) {
 
 			$post_url = get_permalink( $event->ID );
+			if ( $event->offsite_link ) { $post_url = $event->offsite_link; }
 			$title = $event->post_title;
 			$excerpt = ( ! empty( $event->post_excerpt ) ) ? $event->post_excerpt : $event->post_content;
 			$excerpt = wp_trim_words( $excerpt, 20 );
