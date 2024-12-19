@@ -8,6 +8,14 @@ function afa_events_homepage() {
 
 	$fallback_image = get_fallback_image('events');
 
+	$events = afa_events_get_events();
+
+	if ( empty( $events ) ) {
+		echo "<!-- NO EVENTS -->";
+		return;
+	}
+
+	/*
 	global $wpdb;
 
 	$yesterday = intval( date( 'Ymd' ) ) - 1;
@@ -21,6 +29,7 @@ function afa_events_homepage() {
 	$events = $wpdb->get_results( $sql );
 
 	if ( is_wp_error( $events ) || empty( $events ) ) { return; }
+	*/
 
 	echo "<div class='views-entity-embed'>";
 	echo "<div class='view-events-preview py-5' data-yesterday='{$yesterday}'>";
@@ -416,4 +425,156 @@ if ( ! function_exists( 'get_fallback_image' ) ) {
 			return $fallback_images;
 		}
 	}
+}
+
+function afa_events_national_events() {
+
+	$rss_events = get_option( 'afa_national_events_feed_most_recent', array() );
+
+	if ( ! isset( $events['date'] ) || $events['date'] < strtotime( 'yesterday' ) ) {
+
+		$rss_events = array(
+			'date'    => time(),
+			'events'  => array(),
+		);
+
+		$rss = fetch_feed( 'https://www.afa.org/events/feed/' );
+
+		if ( is_wp_error( $rss ) || empty( $rss ) ) {
+			$posts = false;
+		} else {
+			$posts = $rss->get_items( 0, 4 );
+		}
+
+		if ( ! empty( $posts ) ) {
+			foreach ( $posts as $post ) {
+				$image_url = false;
+				$thumbnail_data = false;
+				$post_url = $post->get_permalink();
+				$title = $post->get_title();
+				$excerpt = wp_trim_words( $post->get_description(), 20 );
+				$date = $post->get_date( 'F j, Y' );
+				if ( $post->get_item_tags( 'http://search.yahoo.com/mrss/','thumbnail' ) ) {
+					$thumbnail_item = $post->get_item_tags( 'http://search.yahoo.com/mrss/','thumbnail' );
+					$thumbnail_data = reset( $thumbnail_item[0]['attribs'] );
+				}
+				$image = ( isset( $thumbnail_data['url'] ) ) ? $thumbnail_data['url'] : $fallback_news_image;
+				//$image = array( 'event_thumbnail_image' => $image );
+				if ( $post->get_item_tags( 'https://www.afa.org/event-namespace/','starttime' ) ) {
+					$times = array(
+						'event_start_date'      => 'startdate',
+						'event_start_time'      => 'starttime',
+						'event_end_date'        => 'enddate',
+						'event_end_time'        => 'endtime',
+						'event_time_zone'       => 'timezone',
+						'event_thumbnail_image' => 'thumbnail'
+					);
+					foreach ( $times as $key => $name ) {
+						$this_data = $post->get_item_tags( 'https://www.afa.org/event-namespace/', $name );
+						$this_value = $this_data[0]['attribs']['']['value'];
+						$times[$key] = $this_value;
+					}
+					$date = date( 'F j, Y' . ' 12:00:00', strtotime( $times['event_start_date'] ) );
+					$date = strtotime( $date );
+				}
+
+				if ( empty( $times['event_thumbnail_image'] ) ) {
+					$times['event_thumbnail_image'] = $image;
+				}
+
+				$this_event = array(
+					'post_date'     => $date,
+					'post_title'    => $title,
+					'post_url'      => $post_url,
+					'meta_input'    => $times,
+				);
+
+				$rss_events['events'][] = $this_event;
+
+			}
+		}
+
+		update_option( 'afa_national_events_feed_most_recent', $rss_events );
+
+	}
+
+	return $rss_events['events'];
+
+}
+
+function afa_events_get_events() {
+
+	global $wpdb;
+
+	$yesterday = intval( date( 'Ymd' ) ) - 1;
+
+	$sql = "SELECT
+			p.ID, p.post_title, p.post_content, p.post_excerpt, p.post_date,
+			msd.meta_value AS 'times_start_date',
+			med.meta_value AS 'times_end_date',
+			mst.meta_value AS 'times_start_time',
+			met.meta_value AS 'times_end_time',
+			mtz.meta_value AS 'times_time_zone',
+			mth.meta_value AS 'event_thumbnail'
+		FROM {$wpdb->posts} p
+			JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
+			LEFT JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
+			LEFT JOIN {$wpdb->postmeta} AS mst on (p.ID = mst.post_id) AND (mst.meta_key = 'times_start_time')
+			LEFT JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
+			LEFT JOIN {$wpdb->postmeta} AS mtz on (p.ID = mtz.post_id) AND (mtz.meta_key = 'times_time_zone')
+			LEFT JOIN {$wpdb->postmeta} AS mth on (p.ID = mth.post_id) AND (mth.meta_key = 'event_thumbnail')
+		WHERE
+			(p.post_type = 'event') AND
+			(p.post_status = 'publish') AND
+			( msd.meta_value > {$yesterday} OR med.meta_value > {$yesterday} )
+		ORDER BY msd.meta_value ASC
+		LIMIT 4;";
+	$local_events = $wpdb->get_results( $sql );
+
+	if ( is_wp_error( $local_events ) ) { $local_events = array(); }
+
+	$events = array();
+
+	if ( ! empty( $local_events ) ) {
+		foreach( $local_events as $event ) {
+
+			$post_url = get_permalink( $event->ID );
+			$title = $event->post_title;
+			$excerpt = ( ! empty( $event->post_excerpt ) ) ? $event->post_excerpt : $event->post_content;
+			$excerpt = wp_trim_words( $excerpt, 20 );
+			$date = date( 'F j, Y', strtotime( $event->post_date ) );
+
+			$times = array(
+				'event_start_date' => $event->times_start_date,
+				'event_start_time' => $event->times_start_time,
+				'event_end_date'   => $event->times_end_date,
+				'event_end_time'   => $event->times_end_time,
+				'event_time_zone'  => $event->times_time_zone,
+			);
+			$date = date( 'F j, Y' . ' 00:00:00', strtotime( $times['event_start_date'] ) );
+			$date = strtotime( $date );
+
+			$thumbnail = $event->event_thumbnail ?? get_the_post_thumbnail_url( $event->ID );
+			$image = array( 'event_thumbnail_image' => $thumbnail );
+
+			$this_event = array(
+				'post_date'     => $date,
+				'post_title'    => $title,
+				'post_url'      => $post_url,
+				'meta_input'    => array_merge( $times, $image ),
+			);
+
+			$events[] = $this_event;
+
+		}
+	}
+
+	$rss_events = afa_events_national_events();
+
+	$events = array_merge( $events, $rss_events );
+
+	$events = wp_list_sort( $events, 'post_date', 'ASC' );
+
+	return $events;
+
 }
