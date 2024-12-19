@@ -124,6 +124,64 @@ function afa_events_process_date( $date = false, $hide_time = false ){
 
 }
 
+function afa_events_process_times( $times = false ) {
+
+	if ( ! $times || ! is_array( $times ) ) {
+		return false;
+	}
+
+	$output = false;
+	$meridiems = array();
+	$tm = array();
+
+	foreach ( $times as $key => $time ) {
+		$result = afa_events_process_military_time( $time );
+		$times[$key] = $result[0];
+		$meridiems[$key] = $result[1];
+		$tm[$key] = implode( ' ', $result );
+	}
+
+	$check_meridiem = count( array_unique( $meridiems ) );
+
+	if ( $check_meridiem > 1 ) {
+		$output = implode( ' – ', $tm );
+	} else {
+		$output = implode( ' – ', $times ) . ' ' . $meridiems[$key];
+	}
+
+	return $output;
+
+}
+
+function afa_events_process_military_time( $time = false, $return_array = true ) {
+
+	if ( ! $time ) { return false; }
+
+	$meridiem = 'am';
+
+	$time_array = explode( ':', $time );
+
+	$time_array[0] = ltrim( $time_array[0], '0' );
+
+	if ( $time_array[0] > 12 ) {
+		$time_array[0] = $time_array[0] - 12;
+		$meridiem = 'pm';
+	} elseif ( $time_array[0] == 12 ) {
+		$meridiem = 'pm';
+	}
+
+	$time = implode( ':', $time_array );
+
+	if ( $return_array ) {
+		$output = array( $time, $meridiem );
+	} else {
+		$output = $time . ' ' . $meridiem;
+	}
+
+	return $output;
+
+}
+
 function afa_events_sidebar( $event_id = false, $banner = false  ) {
 
 	if ( ! $event_id ) { return; }
@@ -328,3 +386,21 @@ function afa_corp_sponsors_arnold() { afa_events_corporate_sponsors( 3 ); }
 add_shortcode( 'afa_corp_sponsors_doolittle', 'afa_corp_sponsors_doolittle' );
 add_shortcode( 'afa_corp_sponsors_rickenbacker', 'afa_corp_sponsors_rickenbacker' );
 add_shortcode( 'afa_corp_sponsors_arnold', 'afa_corp_sponsors_arnold' );
+
+add_action( 'wp_ajax_nopriv_get_event_for_agenda', 'afa_events_get_event_for_agenda' );
+add_action( 'wp_ajax_get_event_for_agenda', 'afa_events_get_event_for_agenda' );
+
+function afa_events_get_event_for_agenda() {
+	$post_id = $_POST['id'];
+	$fields = get_fields( $post_id );
+	$fields['prettystart'] = '';
+	$fields['prettyend'] = '';
+	if ( isset( $fields['times']['start_date'] ) && $fields['times']['start_date'] ) {
+		$fields['prettystart'] = date( 'F j, Y', strtotime( $fields['times']['start_date'] ) );
+	}
+	if ( isset( $fields['times']['end_date'] ) && $fields['times']['end_date'] ) {
+		$fields['prettyend'] = date( 'F j, Y', strtotime( $fields['times']['end_date'] ) );
+	}
+
+	wp_send_json_success( $fields );
+}

@@ -22,9 +22,41 @@ class AFA_Events_Post_Types {
 		// ---------------------------------------------------------------------------------------
 		// EVENTS
 		$event_labels = array(
-			'name'                  => _x( 'Events', 'afa-events' ),
-			'singular_name'         => _x( 'Event', 'afa-events' ),
-			'all_items'             => _x( 'All Events', 'afa-events' ),
+			'name'                     => _x( 'Events', 'afa-events' ),
+			'singular_name'            => _x( 'Event', 'afa-events' ),
+			'all_items'                => _x( 'All Events', 'afa-events' ),
+			'add_new'                  => _x( 'Add New', 'afa-events' ),
+			'add_new_item'             => _x( 'Add New Event', 'afa-events' ),
+			'edit_item'                => _x( 'Edit Event', 'afa-events' ),
+			'new_item'                 => _x( 'New Event', 'afa-events' ),
+			'view_item'                => _x( 'View Event', 'afa-events' ),
+			'view_items'               => _x( 'View Events', 'afa-events' ),
+			'search_items'             => _x( 'Search Events', 'afa-events' ),
+			'not_found'                => _x( 'No Events Found', 'afa-events' ),
+			'not_found_in_trash'       => _x( 'No Events found in Trash', 'afa-events' ),
+			'parent_item_colon'        => _x( 'Parent Event:', 'afa-events' ),
+			'all_items'                => _x( 'All Events', 'afa-events' ),
+			'archives'                 => _x( 'Event Archives', 'afa-events' ),
+			'attributes'               => _x( 'Event Attributes', 'afa-events' ),
+			'insert_into_item'         => _x( 'Insert into Event', 'afa-events' ),
+			'uploaded_to_this_item'    => _x( 'Uploaded to this Event', 'afa-events' ),
+			'featured_image'           => _x( 'Banner Image', 'afa-events' ),
+			'set_featured_image'       => _x( 'Set Banner Image', 'afa-events' ),
+			'remove_featured_image'    => _x( 'Remove Banner Image', 'afa-events' ),
+			'use_featured_image'       => _x( 'Usa as Banner Image', 'afa-events' ),
+			'menu_name'                => _x( 'Events', 'afa-events' ),
+			'filter_items_list'        => _x( 'Filter Events List', 'afa-events' ),
+			'filter_by_date'           => _x( 'Filter Events by Posting Date', 'afa-events' ),
+			'items_list_navigation'    => _x( 'Events List Navigation', 'afa-events' ),
+			'items_list'               => _x( 'Events List', 'afa-events' ),
+			'item_published'           => _x( 'Event Published', 'afa-events' ),
+			'item_published_privately' => _x( 'Event Published Privately', 'afa-events' ),
+			'item_reverted_to_draft'   => _x( 'Event Reverted to Draft', 'afa-events' ),
+			'item_trashed'             => _x( 'Event Trashed', 'afa-events' ),
+			'item_scheduled'           => _x( 'Event Posting Scheduled', 'afa-events' ),
+			'item_updated'             => _x( 'Event Updated', 'afa-events' ),
+			'item_link'                => _x( 'Event Link', 'afa-events' ),
+			'item_link_description'    => _x( 'A Link to an Event', 'afa-events' ),
 		);
 		$event_rewrite = array(
 			'slug'                  => 'events',
@@ -50,9 +82,41 @@ class AFA_Events_Post_Types {
 		// ---------------------------------------------------------------------------------------
 		// AGENDA ITEMS
 		$agenda_labels = array(
-			'name'                  => _x( 'Agenda Items', 'afa-events' ),
-			'singular_name'         => _x( 'Agenda Item', 'afa-events' ),
-			'name_admin_bar'        => __( 'Agenda', 'afa-events' ),
+			'name'                     => _x( 'Agenda Items', 'afa-events' ),
+			'singular_name'            => _x( 'Agenda Item', 'afa-events' ),
+			'name_admin_bar'           => _x( 'Agenda', 'afa-events' ),
+			'add_new'                  => _x( 'Add New', 'afa-events' ),
+			'add_new_item'             => _x( 'Add New Agenda Item', 'afa-events' ),
+			'edit_item'                => _x( 'Edit Agenda Item', 'afa-events' ),
+			'new_item'                 => _x( 'New Agenda Item', 'afa-events' ),
+			'view_item'                => _x( 'View Agenda Item', 'afa-events' ),
+			'view_items'               => _x( 'View Agenda Item', 'afa-events' ),
+			'search_items'             => _x( 'Search Agenda Items', 'afa-events' ),
+			'not_found'                => _x( 'No Agenda Items Found', 'afa-events' ),
+			'not_found_in_trash'       => _x( 'No Agenda Items found in Trash', 'afa-events' ),
+			'parent_item_colon'        => _x( 'Parent Agenda Item:', 'afa-events' ),
+			'all_items'                => _x( 'All Agenda Items', 'afa-events' ),
+			'archives'                 => _x( 'Agenda Item Archives', 'afa-events' ),
+			'attributes'               => _x( 'Agenda Item Attributes', 'afa-events' ),
+			'insert_into_item'         => _x( 'Insert into Agenda Item', 'afa-events' ),
+			'uploaded_to_this_item'    => _x( 'Uploaded to this Agenda Item', 'afa-events' ),
+			'featured_image'           => _x( 'Banner Image', 'afa-events' ),
+			'set_featured_image'       => _x( 'Set Banner Image', 'afa-events' ),
+			'remove_featured_image'    => _x( 'Remove Banner Image', 'afa-events' ),
+			'use_featured_image'       => _x( 'Usa as Banner Image', 'afa-events' ),
+			'menu_name'                => _x( 'Agenda Items', 'afa-events' ),
+			'filter_items_list'        => _x( 'Filter Agenda Items List', 'afa-events' ),
+			'filter_by_date'           => _x( 'Filter Agenda Items by Posting Date', 'afa-events' ),
+			'items_list_navigation'    => _x( 'Agenda Items List Navigation', 'afa-events' ),
+			'items_list'               => _x( 'Agenda Items List', 'afa-events' ),
+			'item_published'           => _x( 'Agenda Item Published', 'afa-events' ),
+			'item_published_privately' => _x( 'Agenda Item Published Privately', 'afa-events' ),
+			'item_reverted_to_draft'   => _x( 'Agenda Item Reverted to Draft', 'afa-events' ),
+			'item_trashed'             => _x( 'Agenda Item Trashed', 'afa-events' ),
+			'item_scheduled'           => _x( 'Agenda Item Posting Scheduled', 'afa-events' ),
+			'item_updated'             => _x( 'Agenda Item Updated', 'afa-events' ),
+			'item_link'                => _x( 'Agenda Item Link', 'afa-events' ),
+			'item_link_description'    => _x( 'A Link to an Agenda Item', 'afa-events' ),
 		);
 		$agenda_rewrite = array(
 			'slug'                  => 'agenda',
@@ -76,40 +140,102 @@ class AFA_Events_Post_Types {
 		register_post_type( 'agenda', $agenda_args );
 
 		// ---------------------------------------------------------------------------------------
-		// EVENT SPEAKERS
-		$speaker_labels = array(
-			'name'                  => _x( 'Event Speakers', 'afa-events' ),
-			'singular_name'         => _x( 'Event Speaker', 'afa-events' ),
-			'name_admin_bar'        => __( 'Speakers', 'afa-events' ),
+		// PERSONS formerly EVENT SPEAKERS
+		$person_labels = array(
+			'name'                     => _x( 'People', 'afa-events' ),
+			'singular_name'            => _x( 'Person', 'afa-events' ),
+			'name_admin_bar'           => _x( 'People', 'afa-events' ),
+			'add_new'                  => _x( 'Add New', 'afa-events' ),
+			'add_new_item'             => _x( 'Add New Person', 'afa-events' ),
+			'edit_item'                => _x( 'Edit Person', 'afa-events' ),
+			'new_item'                 => _x( 'New Person', 'afa-events' ),
+			'view_item'                => _x( 'View Person', 'afa-events' ),
+			'view_items'               => _x( 'View Person', 'afa-events' ),
+			'search_items'             => _x( 'Search People', 'afa-events' ),
+			'not_found'                => _x( 'No People Found', 'afa-events' ),
+			'not_found_in_trash'       => _x( 'No People found in Trash', 'afa-events' ),
+			'parent_item_colon'        => _x( 'Parent Person:', 'afa-events' ),
+			'all_items'                => _x( 'All People', 'afa-events' ),
+			'archives'                 => _x( 'Person Archives', 'afa-events' ),
+			'attributes'               => _x( 'Person Attributes', 'afa-events' ),
+			'insert_into_item'         => _x( 'Insert into Person', 'afa-events' ),
+			'uploaded_to_this_item'    => _x( 'Uploaded to this Person', 'afa-events' ),
+			'featured_image'           => _x( 'Banner Image', 'afa-events' ),
+			'set_featured_image'       => _x( 'Set Banner Image', 'afa-events' ),
+			'remove_featured_image'    => _x( 'Remove Banner Image', 'afa-events' ),
+			'use_featured_image'       => _x( 'Usa as Banner Image', 'afa-events' ),
+			'menu_name'                => _x( 'People', 'afa-events' ),
+			'filter_items_list'        => _x( 'Filter People List', 'afa-events' ),
+			'filter_by_date'           => _x( 'Filter People by Posting Date', 'afa-events' ),
+			'items_list_navigation'    => _x( 'People List Navigation', 'afa-events' ),
+			'items_list'               => _x( 'People List', 'afa-events' ),
+			'item_published'           => _x( 'Person Published', 'afa-events' ),
+			'item_published_privately' => _x( 'Person Published Privately', 'afa-events' ),
+			'item_reverted_to_draft'   => _x( 'Person Reverted to Draft', 'afa-events' ),
+			'item_trashed'             => _x( 'Person Trashed', 'afa-events' ),
+			'item_scheduled'           => _x( 'Person Posting Scheduled', 'afa-events' ),
+			'item_updated'             => _x( 'Person Updated', 'afa-events' ),
+			'item_link'                => _x( 'Person Link', 'afa-events' ),
+			'item_link_description'    => _x( 'A Link to a Person', 'afa-events' ),
 		);
-		$speaker_rewrite = array(
-			'slug'                  => 'speaker',
+		$person_rewrite = array(
+			'slug'                  => 'person',
 		);
-		$speaker_args = array(
-			'label'                 => __( 'Event Speakers', 'afa-events' ),
-			'description'           => __( 'AFA event speakers', 'afa-events' ),
-			'labels'                => $speaker_labels,
+		$person_args = array(
+			'label'                 => __( 'People', 'afa-events' ),
+			'description'           => __( 'AFA People and Bios', 'afa-events' ),
+			'labels'                => $person_labels,
 			'supports'              => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
 			'taxonomies'            => array(),
 			'hierarchical'          => false,
 			'public'                => true,
 			'menu_position'         => 20,
-			'menu_icon'             => 'dashicons-media-document',
+			'menu_icon'             => 'dashicons-groups',
 			'has_archive'           => false,
-			'rewrite'               => $speaker_rewrite,
+			'rewrite'               => $person_rewrite,
 			'capability_type'       => 'post',
-			'show_in_menu'          => 'edit.php?post_type=event',
 			'show_in_rest'			=> false,
 		);
-		register_post_type( 'speaker', $speaker_args );
+		register_post_type( 'person', $person_args );
 
 		// ---------------------------------------------------------------------------------------
 		// COMPANIES
 		$company_labels = array(
-			'name'                  => _x( 'Sponsor Companies', 'afa-events' ),
-			'singular_name'         => _x( 'Sponsor Company', 'afa-events' ),
-			'menu_name'             => __( 'Companies', 'afa-events' ),
-			'name_admin_bar'        => __( 'Companies', 'afa-events' ),
+			'name'                     => _x( 'Companies', 'afa-events' ),
+			'singular_name'            => _x( 'Company', 'afa-events' ),
+			'name_admin_bar'           => _x( 'Companies', 'afa-events' ),
+			'add_new'                  => _x( 'Add New', 'afa-events' ),
+			'add_new_item'             => _x( 'Add New Company', 'afa-events' ),
+			'edit_item'                => _x( 'Edit Company', 'afa-events' ),
+			'new_item'                 => _x( 'New Company', 'afa-events' ),
+			'view_item'                => _x( 'View Company', 'afa-events' ),
+			'view_items'               => _x( 'View Company', 'afa-events' ),
+			'search_items'             => _x( 'Search Companies', 'afa-events' ),
+			'not_found'                => _x( 'No Companies Found', 'afa-events' ),
+			'not_found_in_trash'       => _x( 'No Companies found in Trash', 'afa-events' ),
+			'parent_item_colon'        => _x( 'Parent Company:', 'afa-events' ),
+			'all_items'                => _x( 'All Companies', 'afa-events' ),
+			'archives'                 => _x( 'Company Archives', 'afa-events' ),
+			'attributes'               => _x( 'Company Attributes', 'afa-events' ),
+			'insert_into_item'         => _x( 'Insert into Company', 'afa-events' ),
+			'uploaded_to_this_item'    => _x( 'Uploaded to this Company', 'afa-events' ),
+			'featured_image'           => _x( 'Banner Image', 'afa-events' ),
+			'set_featured_image'       => _x( 'Set Banner Image', 'afa-events' ),
+			'remove_featured_image'    => _x( 'Remove Banner Image', 'afa-events' ),
+			'use_featured_image'       => _x( 'Usa as Banner Image', 'afa-events' ),
+			'menu_name'                => _x( 'Companies', 'afa-events' ),
+			'filter_items_list'        => _x( 'Filter Companies List', 'afa-events' ),
+			'filter_by_date'           => _x( 'Filter Companies by Posting Date', 'afa-events' ),
+			'items_list_navigation'    => _x( 'Companies List Navigation', 'afa-events' ),
+			'items_list'               => _x( 'Companies List', 'afa-events' ),
+			'item_published'           => _x( 'Company Published', 'afa-events' ),
+			'item_published_privately' => _x( 'Company Published Privately', 'afa-events' ),
+			'item_reverted_to_draft'   => _x( 'Company Reverted to Draft', 'afa-events' ),
+			'item_trashed'             => _x( 'Company Trashed', 'afa-events' ),
+			'item_scheduled'           => _x( 'Company Posting Scheduled', 'afa-events' ),
+			'item_updated'             => _x( 'Company Updated', 'afa-events' ),
+			'item_link'                => _x( 'Company Link', 'afa-events' ),
+			'item_link_description'    => _x( 'A Link to a Company', 'afa-events' ),
 		);
 		$company_rewrite = array(
 			'slug'                  => 'company',
@@ -123,7 +249,7 @@ class AFA_Events_Post_Types {
 			'hierarchical'          => false,
 			'public'                => true,
 			'menu_position'         => 20,
-			'menu_icon'             => 'dashicons-block-default',
+			'menu_icon'             => 'dashicons-calendar-alt',
 			'has_archive'           => false,
 			'rewrite'               => $company_rewrite,
 			'capability_type'       => 'post',
@@ -572,5 +698,71 @@ class AFA_Events_Post_Types {
 
 	}
 
+	/*
+
+	THIS WAS AN ATTEMPT TO ADD AN UNLISTED EVENT STATUS TO THE PLUGIN.
+	CUSTOM EVENT STATUSES AREN'T HANDLED WELL BY WORDPRESS, AND IT'S A
+	LONG STANDING ISSUE. IT WORKED, BUT THERE ARE ISSUES AROUND EVENTS
+	SHOWING UP IN SEARCH, ETC., LEAVING IT FALLOW FOR THE TIME BEING.
+
+	TO REENABLE, ADD THE FOLLOWING LINES TO THE POST TYPES SECTION OF class-afa-events.php
+		// $this->loader->add_action( 'init', $plugin_post_types, 'afa_events_custom_post_status', 9 );
+		// $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_post_types, 'afa_events_custom_post_status_script', 9 );
+		// $this->loader->add_action( 'ppre_get_posts', $plugin_post_types, 'afa_events_hide_unlisted', 9 );
+
+
+	public static function afa_events_custom_post_status(){
+		$args = array(
+			'label'                     => _x( 'Unlisted', 'post' ),
+			'label_count'               => _n_noop( 'Unlisted (%s)', 'Unlisted (%s)' ),
+			'exclude_from_search'       => true,  //default: $internal
+			'public'                    => true,  //default: false
+			'internal'                  => false, //default: false
+			'protected'                 => false, //default: false
+			'private'                   => false, //default: false
+			'publicly_queryable'        => false, //default: $public
+			'show_in_admin_all_list'    => true,  //default: opposite of $internal
+			'show_in_admin_status_list' => true,  //default: opposite of $internal
+			'date_floating'             => false, //default: false
+		);
+		register_post_status( 'unlisted', $args );
+	}
+
+	public static function afa_events_custom_post_status_script(){
+
+		global $post;
+
+		//only when editing an event
+		if ( $post->post_type == 'event' ){
+
+			// custom post status: unlisted
+			$complete = '';
+			$script = '';
+
+			if (  $post->post_status == 'unlisted' ){
+				$complete = 'selected=\"selected\"';
+				$script = "jQuery('#post-status-display').text('Unlisted');";
+			}
+
+			echo '<script>'.
+				'jQuery(document).ready(function($){'.
+					'jQuery("select#post_status").append('.
+						'"<option value=\"unlisted\" '.$complete.'>'.
+							'Unlisted'.
+						'</option>"'.
+					');'.
+					$script.
+				'});'.
+			'</script>';
+		}
+	}
+
+	public static function afa_events_hide_unlisted( $query ) {
+		if ( ! $query->is_single() && ! is_admin() ) {
+			$query->set( 'post_status', array('publish') );
+			return $query;
+		}
+	}
+	*/
 
 }
