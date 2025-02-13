@@ -283,7 +283,7 @@ function afa_events_sidebar( $event_id = false, $banner = false  ) {
 		}
 	}
 
-	$event_image = $event_data['event_thumbnail'] ?: $fallback_image;
+	$event_image = ( isset( $event_data['event_thumbnail'] ) ) ? $event_data['event_thumbnail'] : $fallback_image;
 
 	echo "<div class='{$event_style}'>";
 
