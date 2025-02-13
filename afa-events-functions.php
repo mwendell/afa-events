@@ -256,23 +256,25 @@ function afa_events_sidebar( $event_id = false, $banner = false  ) {
 
 	$live_info = '';
 	$virtual_info = '';
-	switch ( $event_data['virtual'] ) {
-		case 'virtual':
-			$virtual_info = ( ! empty( $event_data['location']['virtual'] ) ) ? "<b>ONLINE:</b> <a href='{$event_data['location']['virtual']}'>{$event_data['location']['virtual']}</a>" : $online_default;
-			break;
-		case 'live':
-			$live_info = ( ! empty( $event_data['location']['live'] ) ) ? '<b>LOCATION:</b> ' . $event_data['location']['live'] : $live_default;
-			break;
-		case 'hybrid':
-			$virtual_info = ( ! empty( $event_data['location']['virtual'] ) ) ? "<b>ONLINE:</b> <a href='{$event_data['location']['virtual']}'>{$event_data['location']['virtual']}</a>" : $online_default;
-			$live_info = ( ! empty( $event_data['location']['live'] ) ) ? '<b>LOCATION:</b> ' . $event_data['location']['live'] : $live_default;
-			break;
-		default:
-			break;
+	if ( isset( $event_data['virtual'] ) ) {
+		switch ( $event_data['virtual'] ) {
+			case 'virtual':
+				$virtual_info = ( ! empty( $event_data['location']['virtual'] ) ) ? "<b>ONLINE:</b> <a href='{$event_data['location']['virtual']}'>{$event_data['location']['virtual']}</a>" : $online_default;
+				break;
+			case 'live':
+				$live_info = ( ! empty( $event_data['location']['live'] ) ) ? '<b>LOCATION:</b> ' . $event_data['location']['live'] : $live_default;
+				break;
+			case 'hybrid':
+				$virtual_info = ( ! empty( $event_data['location']['virtual'] ) ) ? "<b>ONLINE:</b> <a href='{$event_data['location']['virtual']}'>{$event_data['location']['virtual']}</a>" : $online_default;
+				$live_info = ( ! empty( $event_data['location']['live'] ) ) ? '<b>LOCATION:</b> ' . $event_data['location']['live'] : $live_default;
+				break;
+			default:
+				break;
+		}
 	}
 
 	if ( ! $past_event ) {
-		$reg = $event_data['registration'];
+		$reg = $event_data['registration'] ?: false;
 		if ( isset( $reg['live'] ) && ! empty( $reg['live'] ) ) {
 			$live_info .= "<div class='text-center'><a href='{$reg['live']}'><button class='btn'>Register to Attend In-Person</button></a></div>";
 		}
@@ -281,15 +283,10 @@ function afa_events_sidebar( $event_id = false, $banner = false  ) {
 		}
 	}
 
-
-	$event_image = ( isset( $event_data['event_thumbnail'] ) ) ? $event_data['event_thumbnail'] : $fallback_image;
+	$event_image = $event_data['event_thumbnail'] ?: $fallback_image;
 
 	echo "<div class='{$event_style}'>";
-	?>
 
-
-
-	<?php
 	if ( $banner ) { // banner
 
 		echo "<div class='wp-block-media-text is-stacked-on-mobile is-image-fill'>";
@@ -316,6 +313,7 @@ function afa_events_sidebar( $event_id = false, $banner = false  ) {
 		echo "</div>";
 
 	} else { // sidebar
+
 		echo "<p><img src='{$event_image}' title='' style=''></p>";
 		echo "<p><b>{$event_title}</b></p>";
 		if ( $past_event ) {
