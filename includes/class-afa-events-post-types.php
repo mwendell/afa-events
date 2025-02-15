@@ -67,7 +67,7 @@ class AFA_Events_Post_Types {
 			'description'           => __( 'AFA events', 'afa-events' ),
 			'labels'                => $event_labels,
 			'supports'              => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
-			'taxonomies'            => array(),
+			'taxonomies'            => array( 'post_tag' ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'menu_position'         => 20,
