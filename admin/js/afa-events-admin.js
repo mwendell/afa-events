@@ -11,6 +11,8 @@ $(function() {
 });
 
 $(document).ready(function(){
+
+
 	$('#acf-field_64bfd99984d48').on('change',(function(){
 		var sval = $( '#acf-field_64bfd99984d48 option:selected' ).val();
 		$.ajax({
@@ -44,4 +46,62 @@ $(document).ready(function(){
 		/*
 		*/
 	}))
+
+	// PODCAST GUESTS
+	/*
+	jQuery(document).on('change','[data-key="field_673e454320fdf"] .acf-row [data-key="field_6750c8f19743a"] .acf-input select',(function(){
+		var person_id = jQuery(this).val();
+		var row_id = jQuery(this).closest('.acf-row').data('id');
+		//alert( "Person/Row: " + person_id + "/" + row_id );
+		jQuery.ajax({
+			type: "post",
+			dataType: "json",
+			url: "/wp/wp-admin/admin-ajax.php", //this is wordpress ajax file which is already avaiable in wordpress
+			data: {
+				action:'m24_person_data', //this value is first parameter of add_action
+				id: person_id
+			},
+			success: function(json){
+				//console.log(json);
+				rank = json.data.rank;
+				position = json.data.position;
+				//suffix = json.data.suffix;
+				//nickname = json.data.nickname;
+				jQuery('#acf-field_673e454320fdf-' + row_id + '-field_6750c8c297439').val(rank);
+				jQuery('#acf-field_673e454320fdf-' + row_id + '-field_6750c95d9743c').val(position);
+			}
+		});
+	}))
+	*/
+
+	// PODCAST HOSTS
+	/*
+	jQuery(document).on('change','[data-key="field_6750cac22c42f"] .acf-row [data-key="field_6750cac22c435"] .acf-input select',(function(){
+		var person_id = jQuery(this).val();
+		var row_id = jQuery(this).closest('.acf-row').data('id');
+		//alert( "Person/Row: " + person_id + "/" + row_id );
+		jQuery.ajax({
+			type: "post",
+			dataType: "json",
+			url: "/wp/wp-admin/admin-ajax.php", //this is wordpress ajax file which is already avaiable in wordpress
+			data: {
+				action:'m24_person_data', //this value is first parameter of add_action
+				id: person_id
+			},
+			success: function(json){
+				//console.log(json);
+				rank = json.data.rank;
+				position = json.data.position;
+				//suffix = json.data.suffix;
+				//nickname = json.data.nickname;
+				//console.log( 'RANK: ' + rank );
+				//console.log( 'POS: ' + position );
+				jQuery('#acf-field_6750cac22c42f-' + row_id + '-field_6750cac22c434').val(rank);
+				jQuery('#acf-field_6750cac22c42f-' + row_id + '-field_6750cac22c436').val(position);
+			}
+		});
+	}))
+	*/
+
+
 })
