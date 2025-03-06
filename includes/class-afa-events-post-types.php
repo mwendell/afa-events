@@ -462,8 +462,8 @@ class AFA_Events_Post_Types {
 
 	public static function agenda_view_show_filters( $views ) {
 
-		$views['future'] = '<a href="edit.php?timeslice=future&post_type=event">Current and Future Agenda Items</a>';
-		$views['past'] = '<a href="edit.php?timeslice=past&post_type=event">Past Agenda Items</a>';
+		$views['future'] = '<a href="edit.php?timeslice=future&post_type=agenda">Current and Future Agenda Items</a>';
+		$views['past'] = '<a href="edit.php?timeslice=past&post_type=agenda">Past Agenda Items</a>';
 		// $views['dateless'] = '<a href="edit.php?timeslice=missing&post_type=event">Dateless Agenda Items</a>';
 		return $views;
 
