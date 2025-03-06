@@ -163,7 +163,7 @@ function afa_events_process_date( $date = false, $hide_time = false ){
 
 function afa_events_process_times( $times = false ) {
 
-	if ( ! $times || ! is_array( $times ) ) {
+	if ( ! $times || ! is_array( $times ) || ! $times[0] ) {
 		return false;
 	}
 
