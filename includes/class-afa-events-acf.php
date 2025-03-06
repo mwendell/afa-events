@@ -85,7 +85,7 @@ class AFA_Events_ACF {
 			JOIN wp_posts p ON m.post_id = p.ID
 			LEFT JOIN wp_postmeta m2 ON p.ID = m2.post_id AND m2.meta_key = 'times_start_date'
 			LEFT JOIN wp_postmeta m3 ON p.ID = m3.post_id AND m3.meta_key = 'times_start_time'
-			WHERE ( p.post_type = 'agenda' ) AND (m.meta_key = 'event') AND (m.meta_value = %d)
+			WHERE ( p.post_type = 'agenda' ) AND (m.meta_key = 'event') AND (m.meta_value = %d) AND (p.post_status = 'publish')
 			ORDER BY start_date, start_time, post_title;";
 		$sql = $wpdb->prepare( $sql, $post_id );
 		$agenda_items = $wpdb->get_results( $sql, ARRAY_A );
