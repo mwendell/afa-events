@@ -66,8 +66,12 @@ $(document).ready(function(){
 				position = json.data.position;
 				//suffix = json.data.suffix;
 				//nickname = json.data.nickname;
+				// for event
 				jQuery('#acf-field_65694b4db6f20-' + row_id + '-field_65694b68b6f21').val(rank);
 				jQuery('#acf-field_65694b4db6f20-' + row_id + '-field_65694be3b6f23').val(position);
+				// for agenda
+				jQuery('#acf-field_64bfe0150f052-field_64bfe0150f052_field_65694b4db6f20-' + row_id + '-field_65694b68b6f21').val(rank);
+				jQuery('#acf-field_64bfe0150f052-field_64bfe0150f052_field_65694b4db6f20-' + row_id + '-field_65694be3b6f23').val(position);
 			}
 		});
 	}))
