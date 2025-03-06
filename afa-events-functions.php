@@ -744,7 +744,7 @@ function afa_events_show_agenda( $event_id = false ) {
 					$speaker_name = trim( $speaker['rank'] . ' ' . get_the_title( $speaker_id ) );
 					if ( $suffix ) { $speaker_name .= ', ' . $suffix; }
 					$output .= "<li>";
-					$moderator = ( $speaker['moderator'] ) ? 'Moderator ' : '';
+					$moderator = ( $speaker['moderator'] ) ? 'Moderator' : '';
 					$output .= "<span class='agenda_speaker_name'>{$speaker_name}</span>";
 					if ( $speaker['position'] || $moderator ) {
 						if ( $speaker['position'] && $moderator ) { $moderator .= ', '; }
