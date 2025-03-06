@@ -47,9 +47,8 @@ $(document).ready(function(){
 		*/
 	}))
 
-	// PODCAST GUESTS
-	/*
-	jQuery(document).on('change','[data-key="field_673e454320fdf"] .acf-row [data-key="field_6750c8f19743a"] .acf-input select',(function(){
+	// EVENT SPEAKERS
+	jQuery(document).on('change','[data-key="field_65694b4db6f20"] .acf-row [data-key="field_65694b90b6f22"] .acf-input select',(function(){
 		var person_id = jQuery(this).val();
 		var row_id = jQuery(this).closest('.acf-row').data('id');
 		//alert( "Person/Row: " + person_id + "/" + row_id );
@@ -58,7 +57,7 @@ $(document).ready(function(){
 			dataType: "json",
 			url: "/wp/wp-admin/admin-ajax.php", //this is wordpress ajax file which is already avaiable in wordpress
 			data: {
-				action:'m24_person_data', //this value is first parameter of add_action
+				action:'afa_events_person_data', //this value is first parameter of add_action
 				id: person_id
 			},
 			success: function(json){
@@ -67,12 +66,11 @@ $(document).ready(function(){
 				position = json.data.position;
 				//suffix = json.data.suffix;
 				//nickname = json.data.nickname;
-				jQuery('#acf-field_673e454320fdf-' + row_id + '-field_6750c8c297439').val(rank);
-				jQuery('#acf-field_673e454320fdf-' + row_id + '-field_6750c95d9743c').val(position);
+				jQuery('#acf-field_65694b4db6f20-' + row_id + '-field_65694b68b6f21').val(rank);
+				jQuery('#acf-field_65694b4db6f20-' + row_id + '-field_65694be3b6f23').val(position);
 			}
 		});
 	}))
-	*/
 
 	// PODCAST HOSTS
 	/*

@@ -793,3 +793,12 @@ function afa_events_show_agenda( $event_id = false ) {
 	echo $output;
 
 }
+
+function afa_events_person_data() {
+	$post_id = $_POST['id'];
+	$fields = get_fields( $post_id );
+
+	wp_send_json_success( $fields );
+}
+add_action( 'wp_ajax_nopriv_afa_events_person_data', 'afa_events_person_data' );
+add_action( 'wp_ajax_afa_events_person_data', 'afa_events_person_data' );
