@@ -613,3 +613,183 @@ function afa_events_get_events() {
 	return $events;
 
 }
+
+function afa_events_has_agenda( $event_id = false ) {
+
+	if ( ! $event_id || ! is_numeric( $event_id ) ) { return false; }
+
+	$children = get_children( array( 'post_parent' => $event_id ) );
+
+	if ( is_array( $children ) && ! empty( $children ) ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+function afa_events_show_agenda( $event_id = false ) {
+
+	if ( ! $event_id || ! is_numeric( $event_id ) ) { return false; }
+
+	$args = array(
+		'post_parent'     => $event_id,
+		'post_type'       => 'agenda',
+		'post_status'     => 'publish',
+		'posts_per_page'  => -1,
+		'meta_query'      => array(
+			'relation'    => 'AND',
+			'event_start_date_clause' => array(
+				'key'     => 'times_start_date',
+				'compare' => 'EXISTS',
+			),
+			'event_all_day_clause' => array(
+				'key'     => 'all_day',
+				'compare' => 'EXISTS',
+			),
+			'event_start_time_clause' => array(
+				'key'     => 'times_start_time',
+				'compare' => 'EXISTS',
+			),
+			'event_location_clause' => array(
+				'key'     => 'location_live',
+				'compare' => 'EXISTS',
+			),
+		),
+		'orderby' => array(
+			'event_start_date_clause' => 'ASC',
+			'event_all_day_clause'    => 'DESC',
+			'event_start_time_clause' => 'ASC',
+			'event_location_clause'   => 'ASC',
+		),
+	);
+
+	$agenda_items = new WP_Query( $args );
+
+	if ( ! $agenda_items ) { return false; }
+
+	$output = '';
+	$day_buttons = "<div class='wp-block-buttons is-horizontal is-content-justification-center is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex'>";
+	$show_day_buttons = 0;
+	$show_date = 0;
+
+	$editor = current_user_can( 'edit_posts' );
+
+	$display_date = false;
+	$previous_display_times = false;
+
+	$i = 0;
+
+	if ( $agenda_items->have_posts() ) {
+		while ( $agenda_items->have_posts() ) {
+			$agenda_items->the_post();
+			$post_id = get_the_ID();
+			$times = get_field( 'times' );
+
+			if ( ! isset( $times['end_date'] ) || ! $times['end_date'] ) {
+				$times['end_date'] = $times['start_date'];
+			}
+
+			$past_event = ( strtotime( $times['end_date'] ) < time() ) ? true : false;
+
+			if ( ! $times['end_date'] == $times['start_date'] ) {
+				if ( $display_date != $times['start_date'] ) {
+					$i = 0;
+					$display_date = $times['start_date'];
+					$date_title = date( 'l, F j, Y', strtotime( $display_date ) );
+					$id = explode( ',', $date_title );
+					$id = array_shift( $id );
+					$output .= "<!-- BUTTONS-GO-HERE --></div>";
+					$output .= "<h2 class='wp-block-heading' id='{$id}'>{$date_title}</h2>";
+					$day_buttons .= "<div class='wp-block-button'><a class='wp-block-button__link wp-element-button' href='#{$id}'>{$id}</a></div>";
+					$show_day_buttons++;
+				}
+			}
+
+			$i++;
+			$note = get_field( 'note' );
+			$location = get_field( 'location_live' );
+			$title = get_the_title();
+			$all_day = get_field( 'all_day' );
+			$row_style = ( $i % 2 == 0 ) ? '' : "light-grey-background";
+			if ( $all_day ) {
+				$row_style = 'all_day';
+				$i--;
+			};
+
+			$edit_link = ( $editor ) ? "<a href='/wp/wp-admin/post.php?post={$post_id}&action=edit' class='agenda_edit_link'><span class='dashicons dashicons-edit'></span></a>" : false;
+
+			$display_times = afa_events_process_times( array( $times['start_time'], $times['end_time'] ) );
+			$duplicate_style = ( $display_times == $previous_display_times ) ? 'duplicate' : '';
+
+			$show_speakers = get_field( 'show_speakers' );
+
+			// for mitchellaerospacepower.org
+			if ( str_contains( $_SERVER['HTTP_HOST'], 'mitchell' ) || str_contains( $_SERVER['HTTP_HOST'], '5em2ouy' ) ) {
+				$show_speakers = true;
+			}
+
+			$speakers = ( $show_speakers ) ? get_field( 'speakers' ) : false ;
+
+			$output .= "<div class='agenda {$row_style}'>";
+			$output .= "<div class='agenda_time {$duplicate_style}'><nobr class='{$duplicate_style}'>{$display_times}</nobr></div>";
+			$output .= "<div class='agenda_title'><span class='agenda_title'>{$title}{$edit_link}</span>";
+			if ( $note ) { $output .= "<div class='small agenda_note'>{$note}</div>"; }
+			if ( $speakers ) {
+				// $output .= "<pre>" . print_r( $speakers, 1 ) . "</pre>";
+				$output .= "<div class='agenda_speakers'><ul>";
+				foreach ( $speakers as $speaker ) {
+					$speaker_id = ( isset( $speaker['speaker_id'] ) ) ? $speaker['speaker_id'] : $speaker['speaker'];
+					$suffix = ( isset( $speaker['suffix'] ) ) ? $speaker['suffix'] : get_field( 'suffix', $speaker_id );
+					$speaker_name = trim( $speaker['rank'] . ' ' . get_the_title( $speaker_id ) );
+					if ( $suffix ) { $speaker_name .= ', ' . $suffix; }
+					$output .= "<li>";
+					$moderator = ( $speaker['moderator'] ) ? 'Moderator ' : '';
+					$output .= "<span class='agenda_speaker_name'>{$speaker_name}</span>";
+					if ( $speaker['position'] || $moderator ) {
+						if ( $speaker['position'] && $moderator ) { $moderator .= ', '; }
+						$output .= "<br/><span class='agenda_speaker_position'>{$moderator}{$speaker['position']}</span>";
+					}
+					$output .= "</li>";
+				}
+				$output .= "</ul></div>";
+			}
+			$output .= "</div>";
+			if ( $past_event ) {
+
+				$media = '';
+
+				$video = get_field( 'video' );
+				if ( $video ) {
+					if ( ! str_contains( $video, 'youtu' ) ) {
+						$video = "https://www.youtube.com/watch?v={$video}";
+					}
+					$media .= "<a href='{$video}' target='_blank' class='button agenda_button'>Watch</a>";
+				}
+
+				$audio = get_field( 'audio' );
+				if ( $audio ) {
+					if ( ! str_contains( $audio, 'podbean' ) ) {
+						$audio = "https://www.podbean.com/pu/pbblog-{$audio}";
+					}
+					$media .= "<a href='{$audio}' target='_blank' class='button agenda_button'>Listen</a>";
+				}
+
+				$output .= "<div class='agenda_media'>{$media}</div>";
+			} else {
+				$output .= "<div class='agenda_location'>{$location}</div>";
+			}
+			$output .= "</div>";
+
+			$previous_display_times = $display_times ?: $previous_display_times;
+
+		}
+	}
+
+	if ( $show_day_buttons > 1 ) {
+		$output = str_replace( "<!-- BUTTONS-GO-HERE -->", $day_buttons, $output );
+	}
+
+	echo $output;
+
+}
