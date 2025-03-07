@@ -618,9 +618,9 @@ function afa_events_has_agenda( $event_id = false ) {
 
 	if ( ! $event_id || ! is_numeric( $event_id ) ) { return false; }
 
-	$children = get_children( array( 'post_parent' => $event_id ) );
+	$children = get_children( array( 'post_parent' => $event_id, 'post_type' => 'agenda' ) );
 
-	if ( is_array( $children ) && ! empty( $children ) ) {
+	if ( $children ) {
 		return true;
 	} else {
 		return false;
