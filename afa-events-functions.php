@@ -524,10 +524,10 @@ function afa_events_get_events() {
 			mst.meta_value AS 'times_start_time',
 			met.meta_value AS 'times_end_time',
 			mtz.meta_value AS 'times_time_zone',
-			mth.meta_value AS 'event_thumbnail'
+			mth.meta_value AS 'event_thumbnail',
 			mol.meta_value AS 'offsite_link'
 		FROM {$wpdb->posts} p
-			LEFT OUTER JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
+			JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS mst on (p.ID = mst.post_id) AND (mst.meta_key = 'times_start_time')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
