@@ -6,7 +6,7 @@
 
 function afa_events_homepage() {
 
-	$fallback_image = get_fallback_image('events');
+	$fallback_image = afa_events_get_fallback_image('events');
 
 	$is_afa = str_contains( get_site_url(), 'https://www.afa.org' );
 
@@ -225,7 +225,7 @@ function afa_events_sidebar( $event_id = false, $banner = false  ) {
 
 	$event_style = ( $banner ) ? 'event-data-banner' : 'event-data-sidebar';
 
-	$fallback_image = get_fallback_image('events');
+	$fallback_image = afa_events_get_fallback_image('events');
 
 	$event_data = get_fields( $event_id );
 
@@ -440,16 +440,14 @@ function afa_events_get_event_for_agenda() {
 	wp_send_json_success( $fields );
 }
 
-if ( ! function_exists( 'get_fallback_image' ) ) {
-	function get_fallback_image( $fallback_type = false ) {
-		if ( ! function_exists( 'get_field' ) ) { return false; }
-		$fallback_images = get_field( 'fallback_images', 'options' );
-		if ( ! is_array( $fallback_images ) ) { return false; }
-		if ( $fallback_type == 'news' || $fallback_type == 'events' ) {
-			return $fallback_images[$fallback_type];
-		} elseif ( $fallback_type ) {
-			return $fallback_images;
-		}
+function afa_events_get_fallback_image( $fallback_type = false ) {
+	if ( ! function_exists( 'get_field' ) ) { return false; }
+	$fallback_images = get_field( 'fallback_images', 'options' );
+	if ( ! is_array( $fallback_images ) ) { return false; }
+	if ( $fallback_type == 'news' || $fallback_type == 'events' ) {
+		return $fallback_images[$fallback_type];
+	} elseif ( $fallback_type ) {
+		return $fallback_images;
 	}
 }
 
