@@ -17,10 +17,11 @@ function afa_events_homepage() {
 		return;
 	}
 
+	$yesterday = intval( date( 'Ymd', strtotime( '-1 day' ) ) );
+
 	/*
 	global $wpdb;
 
-	$yesterday = intval( date( 'Ymd' ) ) - 1;
 
 	$sql = "SELECT * FROM wp_posts p
 		JOIN wp_postmeta ms on (p.ID = ms.post_id) AND (ms.meta_key = 'times_start_date')
