@@ -42,7 +42,7 @@ function afa_events_homepage() {
 			break;
 		}
 
-		$event_id = ( isset( $event->ID ) ) ? event->ID : false;
+		$event_id = ( isset( $event->ID ) ) ? $event->ID : false;
 		$event_title = $event['post_title'];
 		$start_date = ( $event['meta_input']['event_start_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_start_date'] ) ) : '';
 		$end_date = ( $event['meta_input']['event_end_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_end_date'] ) ) : '';
