@@ -19,23 +19,7 @@ function afa_events_homepage() {
 
 	$yesterday = intval( date( 'Ymd', strtotime( '-1 day' ) ) );
 
-	/*
-	global $wpdb;
-
-
-	$sql = "SELECT * FROM wp_posts p
-		JOIN wp_postmeta ms on (p.ID = ms.post_id) AND (ms.meta_key = 'times_start_date')
-		JOIN wp_postmeta me on (p.ID = me.post_id) AND (me.meta_key = 'times_end_date')
-		WHERE (p.post_type = 'event') AND (p.post_status = 'publish') AND ( ms.meta_value > {$yesterday} OR me.meta_value > {$yesterday} )
-		ORDER BY ms.meta_value ASC
-		LIMIT 4;";
-	$events = $wpdb->get_results( $sql );
-
-	if ( is_wp_error( $events ) || empty( $events ) ) { return; }
-	*/
-
-	$buttons = array(
-	);
+	$buttons = array();
 
 	if ( $is_afa ) {
 		$buttons = "<a class='btn primary' href='/events/'>View All Events</a>";
@@ -58,7 +42,7 @@ function afa_events_homepage() {
 			break;
 		}
 
-		$event_id = $event->ID ?: false;
+		$event_id = ( isset( $event->ID ) ) ? event->ID : false;
 		$event_title = $event['post_title'];
 		$start_date = ( $event['meta_input']['event_start_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_start_date'] ) ) : '';
 		$end_date = ( $event['meta_input']['event_end_date'] ) ? date( 'Y-m-d', strtotime( $event['meta_input']['event_end_date'] ) ) : '';
@@ -544,12 +528,12 @@ function afa_events_get_events() {
 			mol.meta_value AS 'offsite_link'
 		FROM {$wpdb->posts} p
 			JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
-			LEFT JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
-			LEFT JOIN {$wpdb->postmeta} AS mst on (p.ID = mst.post_id) AND (mst.meta_key = 'times_start_time')
-			LEFT JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
-			LEFT JOIN {$wpdb->postmeta} AS mtz on (p.ID = mtz.post_id) AND (mtz.meta_key = 'times_time_zone')
-			LEFT JOIN {$wpdb->postmeta} AS mth on (p.ID = mth.post_id) AND (mth.meta_key = 'event_thumbnail')
-			LEFT JOIN {$wpdb->postmeta} AS mol on (p.ID = mth.post_id) AND (mol.meta_key = 'offsite_link')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS mst on (p.ID = mst.post_id) AND (mst.meta_key = 'times_start_time')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS mtz on (p.ID = mtz.post_id) AND (mtz.meta_key = 'times_time_zone')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS mth on (p.ID = mth.post_id) AND (mth.meta_key = 'event_thumbnail')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS mol on (p.ID = mth.post_id) AND (mol.meta_key = 'offsite_link')
 		WHERE
 			(p.post_type = 'event') AND
 			(p.post_status = 'publish') AND
