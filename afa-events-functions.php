@@ -515,7 +515,7 @@ function afa_events_get_events() {
 
 	global $wpdb;
 
-	$yesterday = intval( date( 'Ymd' ) ) - 1;
+	$yesterday = intval( date( 'Ymd', strtotime( '-1 day' ) ) );
 
 	$sql = "SELECT
 			p.ID, p.post_title, p.post_content, p.post_excerpt, p.post_date,
@@ -527,7 +527,7 @@ function afa_events_get_events() {
 			mth.meta_value AS 'event_thumbnail'
 			mol.meta_value AS 'offsite_link'
 		FROM {$wpdb->posts} p
-			JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS msd on (p.ID = msd.post_id) AND (msd.meta_key = 'times_start_date')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS med on (p.ID = med.post_id) AND (med.meta_key = 'times_end_date')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS mst on (p.ID = mst.post_id) AND (mst.meta_key = 'times_start_time')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
