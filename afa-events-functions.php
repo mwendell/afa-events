@@ -533,7 +533,7 @@ function afa_events_get_events() {
 			LEFT OUTER JOIN {$wpdb->postmeta} AS met on (p.ID = met.post_id) AND (met.meta_key = 'times_end_time')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS mtz on (p.ID = mtz.post_id) AND (mtz.meta_key = 'times_time_zone')
 			LEFT OUTER JOIN {$wpdb->postmeta} AS mth on (p.ID = mth.post_id) AND (mth.meta_key = 'event_thumbnail')
-			LEFT OUTER JOIN {$wpdb->postmeta} AS mol on (p.ID = mth.post_id) AND (mol.meta_key = 'offsite_link')
+			LEFT OUTER JOIN {$wpdb->postmeta} AS mol on (p.ID = mol.post_id) AND (mol.meta_key = 'offsite_link')
 		WHERE
 			(p.post_type = 'event') AND
 			(p.post_status = 'publish') AND
