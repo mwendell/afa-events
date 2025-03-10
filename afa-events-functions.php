@@ -581,7 +581,11 @@ function afa_events_get_events() {
 		}
 	}
 
-	$is_afa = str_contains( get_site_url(), 'https://www.afa.org' );
+	$is_afa = false;
+
+	if ( str_contains( $_SERVER['HTTP_HOST'], 'www.afa.org' ) || str_contains( $_SERVER['HTTP_HOST'], 'k4vj3fbtqjt6c' ) ) {
+		$is_afa = true;
+	}
 
 	if ( ! $is_afa ) {
 
