@@ -712,7 +712,7 @@ function afa_events_show_agenda( $event_id = false ) {
 			$show_speakers = get_field( 'show_speakers' );
 
 			// for mitchellaerospacepower.org
-			if ( str_contains( $_SERVER['HTTP_HOST'], 'mitchell' ) || str_contains( $_SERVER['HTTP_HOST'], '5em2ouy' ) ) {
+			if ( str_contains( $_SERVER['HTTP_HOST'], 'mitchell' ) || str_contains( $_SERVER['HTTP_HOST'], '7i7ozntag7wdo' ) ) {
 				$show_speakers = true;
 			}
 
