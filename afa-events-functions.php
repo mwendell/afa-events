@@ -482,7 +482,7 @@ function afa_events_national_events() {
 					$thumbnail_item = $post->get_item_tags( 'http://search.yahoo.com/mrss/','thumbnail' );
 					$thumbnail_data = reset( $thumbnail_item[0]['attribs'] );
 				}
-				$image = $thumbnail_data['url'];
+				$image = ( isset( $thumbnail_data['url'] ) ) ? $thumbnail_data['url'] : false;
 				//$image = array( 'event_thumbnail_image' => $image );
 				if ( $post->get_item_tags( 'https://www.afa.org/event-namespace/','starttime' ) ) {
 					$times = array(
