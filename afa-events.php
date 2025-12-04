@@ -1,28 +1,27 @@
 <?php
-
-/**
- * The plugin bootstrap file
+/*
+ * AFA Events
  *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
+ * PHP version 8.0.0
  *
- * @link              https://https://www.kwyjibo.com
- * @since             1.0.0
- * @package           AFA_Events
+ * @category WordPress_Plugin
+ * @package  afa-events
+ * @author   Michael Wendell <mwendell@kwyjibo.com>
+ * @license  GPL-2.0+ <http://www.gnu.org/licenses/gpl-2.0.txt>
+ * @link     https://github.com/mwendell/afa-events/
+ * @since    2024-10-30
  *
  * @wordpress-plugin
- * Plugin Name:       AFA Events
- * Plugin URI:        https://https://www.afa.org
- * Description:       Manage database structure for AFA events.
- * Version:           1.0.0
- * Author:            Michael Wendell
- * Author URI:        https://https://www.kwyjibo.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       afa-events
- * Domain Path:       /languages
+ * Plugin Name:   AFA Events
+ * Plugin URI:    https://github.com/mwendell/afa-events/
+ * Description:   Manage database structure for AFA events.
+ * Version:       1.0.0
+ * Author:        Michael Wendell <mwendell@kwyjibo.com>
+ * Author URI:    https://www.kwyjibo.com
+ * License:       GPL-2.0+
+ * License URI:   http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:   afa-events
+ * Domain Path:   /languages
  */
 
 // If this file is called directly, abort.
@@ -33,7 +32,6 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
  */
 define( 'AFA_EVENTS_VERSION', '1.0.0' );
 
