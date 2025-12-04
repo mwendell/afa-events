@@ -158,9 +158,11 @@ function afa_events_process_times( $times = false ) {
 
 	foreach ( $times as $key => $time ) {
 		$result = afa_events_process_military_time( $time );
-		$times[$key] = $result[0];
-		$meridiems[$key] = $result[1];
-		$tm[$key] = implode( ' ', $result );
+		if ( $result && is_array( $result ) ) {
+			$times[$key] = $result[0];
+			$meridiems[$key] = $result[1];
+			$tm[$key] = implode( ' ', $result );
+		}
 	}
 
 	$check_meridiem = count( array_unique( $meridiems ) );
