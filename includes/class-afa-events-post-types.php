@@ -439,10 +439,10 @@ class AFA_Events_Post_Types
 				case 'future':
 					$where .= " AND ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE ((meta_key='times_start_date') AND (meta_value >= '{$yesterday}')) )";
 					break;
-				case 'past';
+				case 'past':
 					$where .= " AND ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE ((meta_key='times_start_date') AND (meta_value <= '{$tomorrow}')) )";
 					break;
-				case 'dateless'; // this doesn't seem to work, disabling link to this filter above
+				case 'dateless': // this doesn't seem to work, disabling link to this filter above
 					$where .= " AND ID NOT IN ( SELECT post_id FROM $wpdb->postmeta WHERE ((meta_key='times_start_date') AND NOT (meta_value = '')) )";
 					break;
 			}
@@ -574,10 +574,10 @@ class AFA_Events_Post_Types
 				case 'future':
 					$where .= " AND ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE ((meta_key='times_start_date') AND (meta_value >= '{$yesterday}')) )";
 					break;
-				case 'past';
+				case 'past':
 					$where .= " AND ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE ((meta_key='times_start_date') AND (meta_value <= '{$tomorrow}')) )";
 					break;
-				case 'dateless'; // this doesn't seem to work, disabling link to this filter above
+				case 'dateless': // this doesn't seem to work, disabling link to this filter above
 					$where .= " AND ID NOT IN ( SELECT post_id FROM $wpdb->postmeta WHERE ((meta_key='times_start_date') AND NOT (meta_value = '')) )";
 					break;
 			}
